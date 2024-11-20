@@ -1,0 +1,166 @@
+/* css/mkdocstrings.css */
+
+/* Colors tablau 20 */
+:root {
+--tab20_blue_lighter: hsl(205,71%,90%); 
+--tab20_blue_light: hsl(214,56%,80%);
+--tab20_blue_dark: hsl(205,71%,41%);
+
+--tab20_orange_lighter: hsl(28,100%,90%);
+--tab20_orange_light: hsl(30,100%,74%);
+--tab20_orange_dark: hsl(28,100%,53%);
+
+--tab20_green_lighter: hsl(120,57%,90%);
+--tab20_green_light: hsl(110,57%,71%);
+--tab20_green_dark: hsl(120,57%,40%);
+
+--tab20_red_lighter: hsl(360,69%,90%);
+--tab20_red_light: hsl(1,100%,79%);
+--tab20_red_dark: hsl(360,69%,50%);
+
+--tab20_purple_lighter: hsl(271,39%,95%);
+--tab20_purple_light: hsl(274,31%,70%);
+--tab20_purple_dark: hsl(271,39%,57%);
+
+--tab20_brown_lighter: hsl(10,30%,90%);
+--tab20_brown_light: hsl(10,29%,67%);
+--tab20_brown_dark: hsl(10,30%,42%);
+
+--tab20_pink_lighter: hsl(318,66%,90%);
+--tab20_pink_light: hsl(334,80%,84%);
+--tab20_pink_dark: hsl(318,66%,68%);
+
+--tab20_gray_lighter: hsl(0,0%,90%);
+--tab20_gray_light: hsl(0,0%,78%);
+--tab20_gray_dark: hsl(0,0%,60%);
+
+--tab20_olive_lighter: hsl(60,70%,90%);
+--tab20_olive_light: hsl(60,52%,71%);
+--tab20_olive_dark: hsl(60,70%,44%);
+
+
+--tab20_cyan_lighter: hsl(186,80%,90%);
+--tab20_cyan_light: hsl(189,58%,76%);
+--tab20_cyan_dark: hsl(186,80%,45%);
+
+}
+  
+/* Assign colors to Classes, methods, functions and attributes */
+:root,
+[data-md-color-scheme="default"] {
+/* Colors foreground for titles of objects */
+--doc-title-fg-color: rgb(255, 255, 255) ;
+
+--doc-symbol-module-fg-color: var(--tab20_purple_dark);
+--doc-symbol-module-bg-color: var(--tab20_purple_lighter);
+
+--doc-symbol-class-fg-color: var(--tab20_orange_dark);
+--doc-symbol-class-bg-color: var(--tab20_orange_lighter);
+
+--doc-symbol-method-fg-color: var(--tab20_cyan_dark);
+--doc-symbol-method-bg-color: var(--tab20_cyan_lighter);
+
+--doc-symbol-attribute-fg-color: var(--tab20_gray_dark);
+--doc-symbol-attribute-bg-color: var(--tab20_gray_lighter);
+
+--doc-symbol-function-fg-color: var(--tab20_blue_dark);
+--doc-symbol-function-bg-color: var(--tab20_blue_lighter);
+
+}
+
+/* Modules */
+div.doc-module {
+        background: var(--doc-symbol-module-fg-color);
+        .doc-contents{
+                background-color: var(--doc-symbol-module-bg-color);
+        }
+}
+  
+/* Classes */
+div.doc-class {
+        background: var(--doc-symbol-class-fg-color);
+        .doc-contents{
+                background-color: var(--doc-symbol-class-bg-color);
+        }
+        
+}
+  
+/* Methods*/
+div.doc-class{
+  .doc-function{
+          background: var(--doc-symbol-method-fg-color);
+          .doc-contents{
+                  background-color: var(--doc-symbol-method-bg-color);
+          }
+  }
+}
+  
+/* Attributes */
+div.doc-attribute {
+           background: var(--doc-symbol-attribute-fg-color);
+           .doc-contents{
+                   background-color: var(--doc-symbol-attribute-bg-color);
+           }
+  }
+  
+/* Functions */
+div.doc-function {
+          background: var(--doc-symbol-function-fg-color);
+          .doc-contents{
+                  background-color: var(--doc-symbol-function-bg-color);
+          }
+}
+
+
+/* heading and its code */
+h1.doc-heading, h2.doc-heading, h3.doc-heading, h4.doc-heading, h5.doc-heading, h6.doc-heading{
+  margin-bottom: -0.9em;
+  font-size: 1.05em;
+  font-weight: 700;   
+  code {
+      background-color: transparent;
+      font-size: 1.05em;
+      color: var(--doc-title-fg-color);
+      /* this is very important, otherwise the capitalization of objects changes sometimes*/
+      text-transform: none !important;
+
+      /*code highlight: p parenthesis, n variable, nb constant var, o operator,   */
+      span.p {color: rgb(255, 255, 41);}  
+      span.n {color: var(--doc-title-fg-color) ;}
+      span.nb {color: cyan;}
+      span.o {color: whitesmoke; }
+      span.kc {color: cyan; }
+      span.mi {color: cyan; }
+      span.mf {color: cyan; }
+      span.s1 {color: cyan; }
+      }
+  } 
+
+
+
+div.doc-contents {
+  padding-left: 0.8em ;
+  padding-right: 0.3em ;
+
+  > p:nth-child(1){
+    padding-top: 0.5em;  
+  }
+
+  > p:last-child{
+    padding-bottom: 0.5em; 
+  }
+}
+
+/* show_source more nuanced */
+div.doc-contents{
+  details.quote{
+    background-color: inherit; 
+    border-color:transparent;
+    code{background-color: transparent}
+    .highlighttable{ 
+        code { 
+        background-color: var(--md-code-bg-color);
+      }  
+    }
+  }
+}
