@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "de_wiktio"
+version = "0.1.0"
+description = "A Python package to parse and extract data from the German Wiktionary. It allows users to access wikitext content, either by fetching it directly online or by loading a dump file locally."
+license = "MIT"
+authors = ["Carolina Lennon <14179052+lennon-c@users.noreply.github.com>"]
+readme = "docs/README.md"
+repository = "https://github.com/lennon-c/de_wiktio"
+homepage = "https://lennon-c.github.io/de_wiktio/"
+keywords = ["wiktionary-parser", "wikitext-parser",  "dewiktionary", "wikidump-parser", "wikitext", "wiktionary" ]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+requests = "^2.32.3"
+lxml = "^5.3.0"
+mwparserfromhell = "^0.6.6"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+ipykernel = "^6.29.5"
+mkdocstrings-python = "^1.12.2"
+mkdocs = "^1.6.1"
+mkdocs-material = "^9.5.42"
+markdown-exec = {extras = ["ansi"], version = "^1.9.3"}
+mkdocs-open-in-new-tab = "^1.0.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
