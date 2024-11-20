@@ -1,4 +1,4 @@
-site_name: de_wiktio - German Wiktionary Parser
+site_name: de_wiktio - German Wiktionary Extractor
 repo_url: https://github.com/lennon-c/de_wiktio
 theme:
   name: "material"
@@ -25,7 +25,7 @@ extra:
 
 
 nav:
-- Wiktionary Deutsch: README.md
+- German Wiktionary Extractor: README.md
 - Usage: usage.md
 - API:
   - API/index.md
