@@ -18,7 +18,7 @@
     
     
       
-        <title>de_wiktio - German Wiktionary Parser</title>
+        <title>de_wiktio - German Wiktionary Extractor</title>
       
     
     
@@ -92,7 +92,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="de_wiktio - German Wiktionary Parser" class="md-header__button md-logo" aria-label="de_wiktio - German Wiktionary Parser" data-md-component="logo">
+    <a href="." title="de_wiktio - German Wiktionary Extractor" class="md-header__button md-logo" aria-label="de_wiktio - German Wiktionary Extractor" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -106,13 +106,13 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            de_wiktio - German Wiktionary Parser
+            de_wiktio - German Wiktionary Extractor
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Wiktionary Deutsch
+              German Wiktionary Extractor
             
           </span>
         </div>
@@ -201,13 +201,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="de_wiktio - German Wiktionary Parser" class="md-nav__button md-logo" aria-label="de_wiktio - German Wiktionary Parser" data-md-component="logo">
+    <a href="." title="de_wiktio - German Wiktionary Extractor" class="md-nav__button md-logo" aria-label="de_wiktio - German Wiktionary Extractor" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    de_wiktio - German Wiktionary Parser
+    de_wiktio - German Wiktionary Extractor
   </label>
   
     <div class="md-nav__source">
@@ -242,7 +242,7 @@
           
   
   <span class="md-ellipsis">
-    Wiktionary Deutsch
+    German Wiktionary Extractor
   </span>
   
 
@@ -253,7 +253,7 @@
         
   
   <span class="md-ellipsis">
-    Wiktionary Deutsch
+    German Wiktionary Extractor
   </span>
   
 
@@ -284,9 +284,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
+  <a href="#documentation" class="md-nav__link">
     <span class="md-ellipsis">
-      Usage
+      Documentation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-story-behind-this-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Story Behind This Package
     </span>
   </a>
   
@@ -485,9 +494,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
+  <a href="#documentation" class="md-nav__link">
     <span class="md-ellipsis">
-      Usage
+      Documentation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-story-behind-this-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Story Behind This Package
     </span>
   </a>
   
@@ -511,17 +529,22 @@
   
 
 
-  <h1>Wiktionary Deutsch</h1>
+  <h1>German Wiktionary Extractor</h1>
 
-<p><code>de_wiktio</code> is a Python package to parse and extract data from the <em>German Wiktionary</em>. It allows users to access <em>wikitext</em> content, either by fetching it directly online or by preprocessing and loading dump files locally for faster access.</p>
-<p>This package can be thought of as a companion to the <a href="https://lennon-c.github.io/python-wikitext-parser-guide">Hands-on Guide</a>, consolidating the code covered in the tutorial into a single package for convenient access.</p>
+<p><code>de_wiktio</code> is a Python package designed to parse and extract data from the <em>German Wiktionary</em>. It enables users to access <em>wikitext</em> content either by fetching it directly online or by preprocessing and loading dump files locally for faster access. It can extract linguistic data such as parts of speech, inflections, examples, definitions, among others.</p>
+<p>This package can be thought of as a companion to the <a href="https://lennon-c.github.io/python-wikitext-parser-guide">Hands-on Guide</a>; all the steps and code covered in the guide are implemented here as a package. </p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<p>The package was created using Python 11, so make sure that you have Python 11 or later. You can install the package from the my GitHub repo: </p>
+<p>The package was created using Python 11, so make sure that you have Python 11 or later. You can install the package from the my GitHub repo. The following code will install the package and its dependencies (i.e. <code>requests</code>, <code>lxml</code>, and <code>mwparserfromhell</code>):</p>
 <div class="language-bash highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/lennon-c/de_wiktio.git
 </code></pre></div>
-<p>This will install the package and its dependencies: <code>requests</code>, <code>lxml</code>, and <code>mwparserfromhell</code>.</p>
-<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
-<p>In the documentation site, you can find usage examples <a href="https://lennon-c.github.io/de_wiktio/usage/">here</a> and the API documentation <a href="https://lennon-c.github.io/de_wiktio/API/">here</a>.  </p>
+<h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
+<p>In the documentation site, you can find:</p>
+<ul>
+<li><a href="https://lennon-c.github.io/de_wiktio/usage/">Usage examples</a> and </li>
+<li><a href="https://lennon-c.github.io/de_wiktio/API/">The API documentation</a>.  </li>
+</ul>
+<h2 id="the-story-behind-this-package">The Story Behind This Package<a class="headerlink" href="#the-story-behind-this-package" title="Permanent link">&para;</a></h2>
+<p>I created this package as a personal project to extract inflection tables, which I use in my flashcard system for learning German.</p>
 
 
 
