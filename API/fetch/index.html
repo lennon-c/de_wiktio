@@ -1145,7 +1145,7 @@
             <b><code><a class="autorefs autorefs-internal" title="de_wiktio.fetch.print_tags_tree" href="#de_wiktio.fetch.print_tags_tree">print_tags_tree</a></code></b>
             –
             <div class="doc-md-description">
-              <p>Print the tags tree of an XML <code>Element</code> object.</p>
+              <p>Print the tree structure of an XML element, with options for customization.</p>
             </div>
           </li>
     </ul>
@@ -2334,14 +2334,14 @@ Lazy evaluation. This is a time consuming operation, so it is only computed when
 
 
 <h4 id="de_wiktio.fetch.print_tags_tree" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">print_tags_tree</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">only_tagnames</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">max_children</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">max_level</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">_level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">print_tags_tree</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">only_tagnames</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">print_attributes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">print_text</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">max_children</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">max_level</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">_level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
 
 <a href="#de_wiktio.fetch.print_tags_tree" class="headerlink" title="Permanent link">&para;</a></h4>
 
 
     <div class="doc doc-contents ">
 
-        <p>Print the tags tree of an XML <code>Element</code> object.</p>
+        <p>Print the tree structure of an XML element, with options for customization.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -2351,7 +2351,7 @@ Lazy evaluation. This is a time consuming operation, so it is only computed when
               (<code><a class="autorefs autorefs-external" title="lxml.etree.Element" href="https://lxml.de/apidoc/lxml.etree.html#lxml.etree.Element">Element</a></code>)
           –
           <div class="doc-md-description">
-            <p>The XML <code>Element</code> object to print.</p>
+            <p>The XML <code>Element</code> object whose tree structure is to be printed.</p>
           </div>
         </li>
         <li class="doc-section-item field-body">
@@ -2361,7 +2361,27 @@ Lazy evaluation. This is a time consuming operation, so it is only computed when
 )
           –
           <div class="doc-md-description">
-            <p>If True, only print the tag name without the namespace.</p>
+            <p>If True, print only the tag name without the namespace.</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+            <b><code>print_attributes</code></b>
+              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>, default:
+                  <code>False</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>If True, print the attributes of each element.</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+            <b><code>print_text</code></b>
+              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>, default:
+                  <code>False</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>If True, print the text content of each element.</p>
           </div>
         </li>
         <li class="doc-section-item field-body">
@@ -2371,7 +2391,7 @@ Lazy evaluation. This is a time consuming operation, so it is only computed when
 )
           –
           <div class="doc-md-description">
-            <p>The maximum number of children of the root element to print.</p>
+            <p>The maximum number of children to print for the root element.</p>
           </div>
         </li>
         <li class="doc-section-item field-body">
@@ -2391,15 +2411,14 @@ Lazy evaluation. This is a time consuming operation, so it is only computed when
 )
           –
           <div class="doc-md-description">
-            <p>Set to 0 by default. Required for recursion, not to be used by the user.</p>
+            <p>The current recursion level. This is used internally and should not be set by the user.</p>
           </div>
         </li>
     </ul>
 
             <details class="quote">
               <summary>Source code in <code>de_wiktio\fetch.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">272</span>
-<span class="normal">273</span>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">273</span>
 <span class="normal">274</span>
 <span class="normal">275</span>
 <span class="normal">276</span>
@@ -2423,29 +2442,66 @@ Lazy evaluation. This is a time consuming operation, so it is only computed when
 <span class="normal">294</span>
 <span class="normal">295</span>
 <span class="normal">296</span>
-<span class="normal">297</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">print_tags_tree</span><span class="p">(</span>
-    <span class="n">elem</span><span class="p">:</span> <span class="n">ET</span><span class="o">.</span><span class="n">Element</span><span class="p">,</span>
-    <span class="n">only_tagnames</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">max_children</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-    <span class="n">max_level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-    <span class="n">_level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print the tags tree of an XML `Element` object.</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">print_tags_tree</span><span class="p">(</span>
+                    <span class="n">elem</span><span class="p">:</span> <span class="n">ET</span><span class="o">.</span><span class="n">Element</span><span class="p">,</span>
+                    <span class="n">only_tagnames</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                    <span class="n">print_attributes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                    <span class="n">print_text</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                    <span class="n">max_children</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="n">max_level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="n">_level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Print the tree structure of an XML element, with options for customization.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        elem: The XML `Element` object to print.</span>
-<span class="sd">        only_tagnames: If True, only print the tag name without the namespace.</span>
-<span class="sd">        max_children: The maximum number of children of the root element to print.</span>
+<span class="sd">        elem: The XML `Element` object whose tree structure is to be printed.</span>
+<span class="sd">        only_tagnames: If True, print only the tag name without the namespace.</span>
+<span class="sd">        print_attributes: If True, print the attributes of each element.</span>
+<span class="sd">        print_text: If True, print the text content of each element.</span>
+<span class="sd">        max_children: The maximum number of children to print for the root element.</span>
 <span class="sd">        max_level: The maximum depth of the tree to print.</span>
-<span class="sd">        _level: Set to 0 by default. Required for recursion, not to be used by the user.</span>
+<span class="sd">        _level: The current recursion level. This is used internally and should not be set by the user.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tagname</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">QName</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span><span class="o">.</span><span class="n">localname</span> <span class="k">if</span> <span class="n">only_tagnames</span> <span class="k">else</span> <span class="n">elem</span><span class="o">.</span><span class="n">tag</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">_level</span><span class="p">,</span> <span class="n">_level</span><span class="p">,</span> <span class="n">tagname</span><span class="p">)</span>
 
+    <span class="k">if</span> <span class="n">print_attributes</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">elem</span><span class="o">.</span><span class="n">attrib</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="n">_level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">attr</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="n">elem</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="n">attr</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">print_text</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">elem</span><span class="o">.</span><span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">elem</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="n">_level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">elem</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
     <span class="c1"># Restrict depth</span>
     <span class="k">if</span> <span class="n">_level</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">max_level</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">child_index</span><span class="p">,</span> <span class="n">child</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
-            <span class="n">print_tags_tree</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">_level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">only_tagnames</span><span class="p">,</span> <span class="n">max_children</span><span class="p">,</span> <span class="n">max_level</span><span class="p">)</span>
+            <span class="n">print_tags_tree</span><span class="p">(</span><span class="n">child</span><span class="p">,</span>
+                <span class="n">print_attributes</span><span class="o">=</span><span class="n">print_attributes</span><span class="p">,</span>
+                <span class="n">print_text</span><span class="o">=</span><span class="n">print_text</span><span class="p">,</span>
+                <span class="n">only_tagnames</span><span class="o">=</span><span class="n">only_tagnames</span><span class="p">,</span>
+                <span class="n">max_children</span><span class="o">=</span><span class="n">max_children</span><span class="p">,</span>
+                <span class="n">max_level</span><span class="o">=</span><span class="n">max_level</span><span class="p">,</span>
+                <span class="n">_level</span><span class="o">=</span><span class="n">_level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
             <span class="c1"># Limit number of children of the root element</span>
             <span class="k">if</span> <span class="n">_level</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">child_index</span> <span class="o">==</span> <span class="n">max_children</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="k">break</span>
