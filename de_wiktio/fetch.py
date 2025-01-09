@@ -268,33 +268,49 @@ def fetch_page_Action_API(title:str)-> bytes:
 
     resp = requests.get(url=url, params=params)
     return resp.content
+
  
 def print_tags_tree(
-    elem: ET.Element,
-    only_tagnames: bool = False,
-    max_children: int = 5,
-    max_level: int = 5,
-    _level: int = 0
-) -> None:
-    """Print the tags tree of an XML `Element` object.
+                    elem: ET.Element,
+                    only_tagnames: bool = False,
+                    print_attributes: bool = False,
+                    print_text: bool = False,
+                    max_children: int = 5,
+                    max_level: int = 5,
+                    _level: int = 0
+                    ) -> None:
+    """Print the tree structure of an XML element, with options for customization.
 
     Args:
-        elem: The XML `Element` object to print.
-        only_tagnames: If True, only print the tag name without the namespace.
-        max_children: The maximum number of children of the root element to print.
+        elem: The XML `Element` object whose tree structure is to be printed.
+        only_tagnames: If True, print only the tag name without the namespace.
+        print_attributes: If True, print the attributes of each element.
+        print_text: If True, print the text content of each element.
+        max_children: The maximum number of children to print for the root element.
         max_level: The maximum depth of the tree to print.
-        _level: Set to 0 by default. Required for recursion, not to be used by the user.
+        _level: The current recursion level. This is used internally and should not be set by the user.
     """
     tagname = ET.QName(elem).localname if only_tagnames else elem.tag
     print(" " * 5 * _level, _level, tagname)
 
+    if print_attributes:
+        for attr in elem.attrib:
+            print(" " * 5 * (_level + 1), attr, "=", elem.attrib[attr])
+
+    if print_text:
+        if elem.text is not None and elem.text.strip():
+            print(" " * 5 * (_level + 1), elem.text)
+        
     # Restrict depth
     if _level + 1 <= max_level:
         for child_index, child in enumerate(elem):
-            print_tags_tree(child, _level + 1, only_tagnames, max_children, max_level)
+            print_tags_tree(child,
+                print_attributes=print_attributes,
+                print_text=print_text,
+                only_tagnames=only_tagnames,
+                max_children=max_children,
+                max_level=max_level,
+                _level=_level + 1)
             # Limit number of children of the root element
             if _level == 0 and child_index == max_children - 1:
                 break
-
- 
- 
